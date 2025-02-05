@@ -1,0 +1,6 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "cf-token-generator",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-02-05"
+}
