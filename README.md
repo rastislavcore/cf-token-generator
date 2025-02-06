@@ -47,16 +47,46 @@ Basic `wrangler.json` (already included):
 
 ## 🚀 Usage
 
-Run the generator:
+### As a Global CLI Tool
+
+1. Install globally
+
+   ```bash
+   npm install -g .
+   ```
+
+2. Run the generator
+
+   ```bash
+   cf-token-gen [options]
+   ```
+
+### Using npx
+
+Globally installed
 
 ```bash
-npm start
+npx cf-token-gen [options]
 ```
 
-Or directly with Node:
+Locally installed
 
 ```bash
-npx wrangler dev
+npx ./src/cli.ts [options]
+```
+
+### Using bun
+
+Globally installed
+
+```bash
+bunx cf-token-gen [options]
+```
+
+Locally installed
+
+```bash
+bun run ./src/cli.ts [options]
 ```
 
 ### 🗂️ **Command Options**
@@ -73,47 +103,38 @@ npx wrangler dev
 1️⃣ **Generate a Token with Read-Only DNS Permissions:**
 
 ```bash
-npx wrangler dev --permissions read:zones,dns:read
+cf-token-gen --permissions com.cloudflare.api.account:Account Settings Read
 ```
 
 2️⃣ **Generate a Token Valid Until a Specific Date:**
 
 ```bash
-npx wrangler dev --permissions dns:edit --valid-until 2025-12-31T23:59:59Z
+cf-token-gen --permissions com.cloudflare.api.account:Account Settings Read --valid-until 2025-12-31T23:59:59Z
 ```
 
 3️⃣ **Whitelist GitHub Pages IPs Instead of Actions:**
 
 ```bash
-npx wrangler dev --permissions account:read --batch pages
+cf-token-gen --permissions com.cloudflare.api.account:Account Settings Read --batch pages
 ```
 
 4️⃣ **Disable GitHub IP Whitelisting:**
 
 ```bash
-npx wrangler dev --permissions dns:edit --no-github-ips
+cf-token-gen --permissions com.cloudflare.api.account:Account Settings Read --no-github-ips
+```
+
+5️⃣ **Get Permission Group ID:**
+
+```bash
+cf-token-gen get-permission-id "Account Settings Read"
 ```
 
 ## 🔒 Security
 
 - **Sensitive data** like API tokens and account IDs should be managed in `.env` files (never hardcoded).
-- **GitHub IPs** are fetched dynamically to ensure the latest ranges are always applied.
-
----
-
-## 🧩 Development
-
-### TypeScript Type Generation
-
-```bash
-npm run cf-typegen
-```
-
-### Local Development
-
-```bash
-npm run dev
-```
+- **GitHub IPs** are fetched with retry mechanism and timeout handling.
+- **Token storage** is saved to `cf-token.txt` in the current directory.
 
 ## 📜 License
 

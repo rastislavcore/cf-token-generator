@@ -193,3 +193,7 @@ Desktop.ini
 *-lock.yaml
 *.lock
 *.lockb
+
+# Token file
+
+cf-token.txt
